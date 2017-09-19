@@ -5,7 +5,6 @@ import UpDownToggleComponent from './Up_Down_Toggle_Component';
 
 
 class Search_Consumer_Component extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -35,7 +34,6 @@ class Search_Consumer_Component extends Component {
             </div>
         );
     }
-
     renderSearchConsumerFields() {
         return (
             <div>
@@ -78,18 +76,14 @@ class Search_Consumer_Component extends Component {
             </div>
         );
     }
-
-
     searchConsumerFunction() {
         console.log('Searching for consumers...');
     }
-
     setContentVisible() {
         this.setState({
             isContentVisible: !this.state.isContentVisible
         });
     }
-
     upDownToggleComponentClickedFunction() {
         this.setContentVisible();
     }

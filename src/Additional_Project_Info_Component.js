@@ -4,8 +4,8 @@ import RadioButton2Component from './Radio_Button2_Component';
 import SelectListComponent from './Select_List_Component';
 
 class Additional_Project_Info_Component extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.projectStatusSelectOptions = {
             planning: 'Planning',
             construction: 'Construction',

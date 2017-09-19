@@ -7,7 +7,6 @@ import ServiceRequestData from './ServiceRequestData';
 import Table5SelectableComponent from './Table5_Selectable_Component';
 
 class Service_Request extends Component {
-
     constructor() {
         super();
         const SERVICE_REQUEST_DATA = new ServiceRequestData();

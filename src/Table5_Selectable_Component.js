@@ -5,7 +5,7 @@ class Table5_Selectable_Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isContentVisible: this.props.isContentVisible
+            isContentVisible: props.isContentVisible
         }
     }
     render() {
@@ -20,7 +20,6 @@ class Table5_Selectable_Component extends Component {
             </div>
         )
     }
-
     renderTable() {
         return (
             <div className="row">
@@ -51,7 +50,6 @@ class Table5_Selectable_Component extends Component {
             </div>
         );
     }
-
     renderTableCollapsibleUpDownToggle() {
         return (this.props.isTableCollapsible && this.props.isTableCollapsible === true)
             ? <UpDownToggleComponent
@@ -60,7 +58,6 @@ class Table5_Selectable_Component extends Component {
             />
             : null;
     }
-
     renderTableRow() {
         let rows = [];
 
@@ -86,13 +83,11 @@ class Table5_Selectable_Component extends Component {
             </tbody>
         );
     }
-
     setContentVisible () {
         this.setState({
             isContentVisible: !this.state.isContentVisible
         })
     }
-
     upDownToggleComponentClickedFunction () {
         this.setContentVisible()
     }
