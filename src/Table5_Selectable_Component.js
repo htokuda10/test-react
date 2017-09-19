@@ -4,59 +4,44 @@ import UpDownToggleComponent from './Up_Down_Toggle_Component';
 class Table5_Selectable_Component extends Component {
     constructor(props) {
         super(props);
-        this.clickFunction = props.clickFunction;
-        this.columnKey1 = props.columnKey1;
-        this.columnKey2 = props.columnKey2;
-        this.columnKey3 = props.columnKey3;
-        this.columnKey4 = props.columnKey4;
-        this.columnKey5 = props.columnKey5;
-        this.columnName1 = props.columnName1;
-        this.columnName2 = props.columnName2;
-        this.columnName3 = props.columnName3;
-        this.columnName4 = props.columnName4;
-        this.columnName5 = props.columnName5;
-        this.dataArray = props.dataArray;
-        this.isContentVisible = props.isContentVisible;
-        this.isTableCollapsible = props.isTableCollapsible;
-        this.tableClasses = props.tableClasses;
-        this.tableTitle = props.tableTitle;
-        this.titleClasses = props.titleClasses;
-        this.contentVisible = (this.isContentVisible === true);
-        this.tableCollapsible = (this.isTableCollapsible === true);
+        this.state = {
+            isContentVisible: this.props.isContentVisible
+        }
     }
     render() {
         return (
             <div className="row">
                 <div className="col-sm-12">
-                    <h4 className={ this.titleClasses }>{ this.tableTitle }
+                    <h4 className={ this.props.titleClasses }>{ this.props.tableTitle }
                         { this.renderTableCollapsibleUpDownToggle() }
                     </h4>
-                    { this.renderTable() }
+                    { (this.state.isContentVisible) ? this.renderTable() : null }
                 </div>
             </div>
         )
     }
+
     renderTable() {
-        return (this.contentVisible && this.contentVisible === true)
-            ? <div className="row">
+        return (
+            <div className="row">
                 <div className="col-sm-12">
-                    <table className={ this.tableClasses }>
+                    <table className={ this.props.tableClasses }>
                         <thead>
                         <tr>
                             <th>
-                                { this.columnName1 }
+                                { this.props.columnName1 }
                             </th>
                             <th>
-                                { this.columnName2 }
+                                { this.props.columnName2 }
                             </th>
                             <th>
-                                { this.columnName3 }
+                                { this.props.columnName3 }
                             </th>
                             <th>
-                                { this.columnName4 }
+                                { this.props.columnName4 }
                             </th>
                             <th>
-                                { this.columnName5 }
+                                { this.props.columnName5 }
                             </th>
                         </tr>
                         </thead>
@@ -64,27 +49,33 @@ class Table5_Selectable_Component extends Component {
                     </table>
                 </div>
             </div>
-            : null;
+        );
     }
+
     renderTableCollapsibleUpDownToggle() {
-        return (this.tableCollapsible && this.tableCollapsible === true)
+        return (this.props.isTableCollapsible && this.props.isTableCollapsible === true)
             ? <UpDownToggleComponent
-               isContentVisible={ this.contentVisible }
-               parentToggleFunction={ this.upDownToggleComponentClickedFunction }
+               isContentVisible={ this.state.isContentVisible }
+               parentToggleFunction={ this.upDownToggleComponentClickedFunction.bind(this) }
             />
             : null;
     }
+
     renderTableRow() {
         let rows = [];
 
-        this.dataArray.forEach(function(value, index) {
+        /* Iterate through the data array and create a new table row per element. On each iteration, push the built
+        JSX to an array, which will injected into the return JSX.
+        NOTE: The onClick function will trigger an anonymous function in order to render appropriately and pass the
+        clicked rows data back to the originating click function. */
+        this.props.dataArray.forEach(function(value, index) {
             rows.push(
-                <tr key={ index }>
-                    <td>{ value[this.columnKey1] }</td>
-                    <td>{ value[this.columnKey2] }</td>
-                    <td>{ value[this.columnKey3] }</td>
-                    <td>{ value[this.columnKey4] }</td>
-                    <td>{ value[this.columnKey5] }</td>
+                <tr key={ index } onClick={() => this.props.clickFunction(value)}>
+                    <td>{ value[this.props.columnKey1] }</td>
+                    <td>{ value[this.props.columnKey2] }</td>
+                    <td>{ value[this.props.columnKey3] }</td>
+                    <td>{ value[this.props.columnKey4] }</td>
+                    <td>{ value[this.props.columnKey5] }</td>
                 </tr>
             );
         }.bind(this));
@@ -94,6 +85,16 @@ class Table5_Selectable_Component extends Component {
                 { rows }
             </tbody>
         );
+    }
+
+    setContentVisible () {
+        this.setState({
+            isContentVisible: !this.state.isContentVisible
+        })
+    }
+
+    upDownToggleComponentClickedFunction () {
+        this.setContentVisible()
     }
 }
 

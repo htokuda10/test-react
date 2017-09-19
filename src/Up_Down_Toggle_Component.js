@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 
 class Up_Down_Toggle_Component extends Component {
-
-    constructor(props) {
-
-        super(props);
-        this.contentVisible = (props.isContentVisible && props.isContentVisible === true);
-        this.searchMenuArrowClasses = (props.isContentVisible && props.isContentVisible === true)
-            ? 'glyphicon glyphicon-menu-up' : 'glyphicon glyphicon-menu-down';
-        this.parentToggleFunction = props.parentToggleFunction;
-    }
-
     render() {
         return (
-            <span className={ this.searchMenuArrowClasses } aria-hidden="true"
-                  onClick={this.clickFunctions.bind(this)} />
+            <span
+                className={ (this.props.isContentVisible)
+                    ? 'glyphicon glyphicon-menu-up' : 'glyphicon glyphicon-menu-down' }
+                aria-hidden="true"
+                onClick={ this.clickFunctions.bind(this) }
+            />
         )
     }
     /**
@@ -24,20 +18,7 @@ class Up_Down_Toggle_Component extends Component {
      * value of the parent component.
      */
     clickFunctions() {
-        this.parentToggleFunction();
-        this.renderArrow()
-    }
-    parentUpdatedIsContentVisible() {
-        this.contentVisible = !this.contentVisible;
-        this.renderArrow()
-    }
-    /**
-     * renderArrow will render the direcion of the arrow based on the show component value. If the show component
-     * value is true, display a down arrow to indicate that clicking the icon will show the component.
-     */
-    renderArrow() {
-        this.searchMenuArrowClasses = (this.contentVisible && this.contentVisible === true)
-            ? 'glyphicon glyphicon-menu-up' : 'glyphicon glyphicon-menu-down'
+        this.props.parentToggleFunction();
     }
 }
 

@@ -8,7 +8,9 @@ class Search_Consumer_Component extends Component {
 
     constructor(props) {
         super(props);
-        this.contentVisible = props.isContentVisible;
+        this.state = {
+            isContentVisible: props.isContentVisible
+        }
     }
     render() {
         return (
@@ -18,15 +20,15 @@ class Search_Consumer_Component extends Component {
                         <div className="col-sm-12">
                             <h3>Search For Consumer
                                 <UpDownToggleComponent
-                                    isContentVisible={ this.contentVisible }
-                                    parentToggleFunction={ this.upDownToggleComponentClickedFunction }
+                                    isContentVisible={ this.state.isContentVisible }
+                                    parentToggleFunction={ this.upDownToggleComponentClickedFunction.bind(this) }
                                 />
                             </h3>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-sm-6">
-                            { this.renderSearchConsumerFields(this.contentVisible) }
+                            { (this.state.isContentVisible) ? this.renderSearchConsumerFields() : null }
                         </div>
                     </div>
                 </div>
@@ -34,9 +36,9 @@ class Search_Consumer_Component extends Component {
         );
     }
 
-    renderSearchConsumerFields(contentVisible) {
-        return (contentVisible && contentVisible === true)
-            ? <div>
+    renderSearchConsumerFields() {
+        return (
+            <div>
                 {/* Zip code input */}
                 <TextInputFieldComponent
                     containerClasses="text-left"
@@ -74,16 +76,20 @@ class Search_Consumer_Component extends Component {
                     idValue="searchButtonId"
                 />
             </div>
-            : null;
+        );
     }
 
 
     searchConsumerFunction() {
-        console.log('Searching for consumers...')
+        console.log('Searching for consumers...');
     }
+
     setContentVisible() {
-        this.contentVisible = !this.contentVisible
+        this.setState({
+            isContentVisible: !this.state.isContentVisible
+        });
     }
+
     upDownToggleComponentClickedFunction() {
         this.setContentVisible();
     }
